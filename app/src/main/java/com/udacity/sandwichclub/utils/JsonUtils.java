@@ -14,25 +14,25 @@ public class JsonUtils {
     public static Sandwich parseSandwichJson(String json) throws JSONException {
         Sandwich sandwich = new Sandwich();
         JSONObject details = new JSONObject(json);
-        JSONObject sandwichDetails = details.getJSONObject("name");
+        JSONObject sandwichName = details.getJSONObject("name");
         List<String> akaList = new ArrayList<>();
         List<String> ingredientsList = new ArrayList<>();
 
-        JSONArray alsoKnowAs = sandwichDetails.getJSONArray("alsoKnownAs");
+        JSONArray alsoKnowAs = sandwichName.getJSONArray("alsoKnownAs");
         for (int i = 0; i < alsoKnowAs.length(); i++){
             akaList.add(alsoKnowAs.getString(i));
         }
 
-        JSONArray ingredients = sandwichDetails.getJSONArray("ingredients");
+        JSONArray ingredients = details.getJSONArray("ingredients");
         for (int i = 0; i < ingredients.length(); i++){
             ingredientsList.add(ingredients.getString(i));
         }
 
-        sandwich.setMainName(sandwichDetails.getString("mainName"));
+        sandwich.setMainName(details.getString("mainName"));
         sandwich.setAlsoKnownAs(akaList);
-        sandwich.setPlaceOfOrigin(sandwichDetails.getString("placeOfOrigin"));
-        sandwich.setDescription(sandwichDetails.getString("description"));
-        sandwich.setImage(sandwichDetails.getString("image"));
+        sandwich.setPlaceOfOrigin(details.getString("placeOfOrigin"));
+        sandwich.setDescription(details.getString("description"));
+        sandwich.setImage(details.getString("image"));
         sandwich.setIngredients(ingredientsList);
 
         return sandwich;
