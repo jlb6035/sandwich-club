@@ -28,7 +28,7 @@ public class JsonUtils {
             ingredientsList.add(ingredients.getString(i));
         }
 
-        sandwich.setMainName(details.getString("mainName"));
+        sandwich.setMainName(sandwichName.getString("mainName"));
         sandwich.setAlsoKnownAs(akaList);
         sandwich.setPlaceOfOrigin(details.getString("placeOfOrigin"));
         sandwich.setDescription(details.getString("description"));

@@ -24,7 +24,6 @@ public class DetailActivity extends AppCompatActivity {
     private TextView mAKATextView;
     private TextView mIngredientsTextView;
     private TextView mDescriptionTextView;
-    private Sandwich mSandwich;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,24 +51,24 @@ public class DetailActivity extends AppCompatActivity {
 
         String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
         String json = sandwiches[position];
-         mSandwich = null;
+        Sandwich sandwich = null;
         try {
-            mSandwich = JsonUtils.parseSandwichJson(json);
+            sandwich = JsonUtils.parseSandwichJson(json);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (mSandwich == null) {
+        if (sandwich == null) {
             // Sandwich data unavailable
             closeOnError();
             return;
         }
 
-        populateUI();
+        populateUI(sandwich);
         Picasso.with(this)
-                .load(mSandwich.getImage())
+                .load(sandwich.getImage())
                 .into(mSandwichPicture);
 
-        setTitle(mSandwich.getMainName());
+        setTitle(sandwich.getMainName());
     }
 
     private void closeOnError() {
@@ -77,10 +76,10 @@ public class DetailActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
-    private void populateUI() {
-        mOriginTextView.setText(mSandwich.getPlaceOfOrigin());
-        mAKATextView.setText((TextUtils.join(", ", mSandwich.getAlsoKnownAs())));
-        mIngredientsTextView.setText(TextUtils.join(", ", mSandwich.getIngredients()));
-        mDescriptionTextView.setText(mSandwich.getDescription());
+    private void populateUI(Sandwich sandwich) {
+        mOriginTextView.setText(sandwich.getPlaceOfOrigin());
+        mAKATextView.setText((TextUtils.join(", ", sandwich.getAlsoKnownAs())));
+        mIngredientsTextView.setText(TextUtils.join(", ", sandwich.getIngredients()));
+        mDescriptionTextView.setText(sandwich.getDescription());
     }
 }
